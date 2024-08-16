@@ -1,0 +1,62 @@
+{
+    "version": 4,
+    "include": [
+        "cmake/msvc.json"
+    ],
+    "configurePresets": [
+        {
+            "name": "Qt6",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_PREFIX_PATH": "${sourceParentDir}/CPPLib/lib/QtSuoerStatic_md6.5.3;${sourceParentDir}/../CPPLib/lib/QtSuoerStatic_md6.5.3"
+            }
+        },
+        {
+            "name": "OpenSSL",
+            "hidden": true,
+            "cacheVariables": {
+                "OPENSSL_ROOT_DIR": "C:/Program Files/OpenSSL-Win64"
+            }
+        },
+        {
+            "name": "ninja-msvc-x64",
+            "hidden": false,
+            "inherits": [
+                "ninja-msvc-x64-base",
+                "Qt6",
+                "OpenSSL"
+            ]
+        },
+        {
+            "name": "visual-studio-2022-x64",
+            "hidden": false,
+            "inherits": [
+                "visual-studio-17-x64-base",
+                "Qt6",
+                "OpenSSL"
+            ]
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "ninja-msvc-x64-debug",
+            "configurePreset": "ninja-msvc-x64",
+            "configuration": "Debug"
+        },
+        {
+            "name": "ninja-msvc-x64-release",
+            "configurePreset": "ninja-msvc-x64",
+            "configuration": "Release"
+        },
+        {
+            "name": "visual-studio-2022-x64-debug",
+            "configurePreset": "visual-studio-2022-x64",
+            "configuration": "Debug"
+        },
+        {
+            "name": "visual-studio-2022-x64-release",
+            "configurePreset": "visual-studio-2022-x64",
+            "configuration": "Release"
+        }
+    ]
+}
