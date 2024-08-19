@@ -15,7 +15,7 @@
             "name": "OpenSSL",
             "hidden": true,
             "cacheVariables": {
-                "OPENSSL_ROOT_DIR": "C:/Program Files/OpenSSL-Win64"
+                "OPENSSL_ROOT_DIR": "C:/OpenSSL-Win64"
             }
         },
         {
@@ -23,8 +23,7 @@
             "hidden": false,
             "inherits": [
                 "ninja-msvc-x64-base",
-                "Qt6",
-                "OpenSSL"
+                "Qt6"
             ]
         },
         {
@@ -32,8 +31,7 @@
             "hidden": false,
             "inherits": [
                 "visual-studio-17-x64-base",
-                "Qt6",
-                "OpenSSL"
+                "Qt6"
             ]
         }
     ],

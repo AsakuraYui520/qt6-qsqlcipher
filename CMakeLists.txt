@@ -3,17 +3,21 @@
 
 cmake_minimum_required(VERSION 3.16)
 
-find_package(OpenSSL REQUIRED)
-
 include(.cmake.conf)
-project(QSQLCipherDriverPlugins
+project(QSQLCipherDriverPlugin
     VERSION "${QT_REPO_MODULE_VERSION}"
     DESCRIPTION "Qt SQLCipher driver Plugin"
     HOMEPAGE_URL "https://qt.io/"
     LANGUAGES CXX C ASM
 )
 
+option(USE_OPENSSL "Use openssl library" OFF)
+
 find_package(Qt6 ${PROJECT_VERSION} CONFIG REQUIRED COMPONENTS BuildInternals Sql)
+
+if(USE_OPENSSL)
+    find_package(OpenSSL REQUIRED)
+endif ()
 
 qt_internal_project_setup()
 

@@ -1,0 +1,4 @@
+[submodule "3rdparty/libtomcrypt"]
+	path = 3rdparty/libtomcrypt
+	url = https://github.com/libtom/libtomcrypt
+	branch = develop

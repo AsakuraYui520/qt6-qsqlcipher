@@ -32,20 +32,36 @@ qt_internal_add_plugin(${qsqlcipher_plugin_name}
 ## Scopes:
 #####################################################################
 
-qt_internal_extend_target(${qsqlcipher_plugin_name}
-    LIBRARIES
-        OpenSSL::SSL
-        OpenSSL::Crypto
-)
+set(libtomcrypt_sources "")
+set(libtomcrypt_include_dir "")
+
+if(USE_OPENSSL)
+    qt_internal_extend_target(${qsqlcipher_plugin_name}
+        LIBRARIES
+            OpenSSL::SSL
+            OpenSSL::Crypto
+    )
+    set(SQLCIPHER_CRYPTO_TYPE SQLCIPHER_CRYPTO_OPENSSL)
+else ()
+    set(libtomcrypt_dir "../../../3rdparty/libtomcrypt")
+    include(${libtomcrypt_dir}/sources.cmake)
+    foreach (source_file ${SOURCES})
+        set(real_source_file "${libtomcrypt_dir}/${source_file}")
+        list(APPEND libtomcrypt_sources ${real_source_file})
+    endforeach ()
+    set(libtomcrypt_include_dir "${libtomcrypt_dir}/src/headers")
+    set(SQLCIPHER_CRYPTO_TYPE SQLCIPHER_CRYPTO_LIBTOMCRYPT)
+endif ()
 
 qt_disable_warnings(${qsqlcipher_plugin_name})
 
 
 qt_internal_extend_target(${qsqlcipher_plugin_name}
     SOURCES
-        ./sqlite3.c
+        ../../../3rdparty/sqlcipher/sqlite3.c
+        ${libtomcrypt_sources}
     DEFINES
-        SQLCIPHER_CRYPTO_OPENSSL
+        ${SQLCIPHER_CRYPTO_TYPE}
         SQLITE_TEMP_STORE=2
         SQLITE_HAS_CODEC
         SQLITE_ENABLE_COLUMN_METADATA
@@ -59,7 +75,8 @@ qt_internal_extend_target(${qsqlcipher_plugin_name}
         SQLITE_ENABLE_RTREE
         SQLITE_OMIT_COMPLETE
     INCLUDE_DIRECTORIES
-        ./
+        ../../../3rdparty/sqlcipher/
+        ${libtomcrypt_include_dir}
 )
 
 qt_internal_extend_target(${qsqlcipher_plugin_name} CONDITION CMAKE_BUILD_TYPE STREQUAL Release

@@ -33,5 +33,7 @@
 
 *.pro.user
 
-build/
+/build/
+/install/
 /.idea/
+/.vs/
